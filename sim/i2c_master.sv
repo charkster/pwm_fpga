@@ -248,6 +248,16 @@ module i2c_master
          STO;
        end
    endtask
+   
+   task i2c_write_word; // LSB first
+      input [6:0] i2c_slave_addr;
+      input [7:0] addr;
+      input [15:0] data;
+      begin
+         i2c_write_no_stop(i2c_slave_addr, addr, data[7:0]);
+         i2c_write_data(data[15:8],1'b1);
+       end
+   endtask
      
    task i2c_hs_write_no_stop;
       input [6:0] i2c_slave_addr;
@@ -324,6 +334,20 @@ module i2c_master
          STO;
       end
    endtask
+   
+   task i2c_read_word;
+      input  [6:0] i2c_slave_addr;
+      input  [7:0] addr;
+      output [15:0] data;
+      
+      begin
+         i2c_read_no_stop(i2c_slave_addr, addr, data[7:0]);
+         MACK;
+         DGT(data[15:8]);
+         MnACK;
+         STO;
+      end
+   endtask
 
    task i2c_hs_read_no_stop;
       input  [6:0] i2c_slave_addr;
@@ -350,6 +374,25 @@ module i2c_master
          STO;
       end
    endtask
+
+   // read-modify-write
+   task i2c_bf_write;
+     input [6:0] i2c_slave_addr;
+     input [7:0] addr;      // address
+     input [7:0] bit_value; // bitfield value
+     input [7:0] offset;    // offset to bitfield
+     input [7:0] width;     // width of bitfield
+     logic [7:0] bit_mask;
+     logic [7:0] mod_val;
+     logic [7:0] read_data;
+     begin
+       i2c_read (i2c_slave_addr, addr, read_data);
+       bit_mask = (2 ** width - 1) << offset;
+       mod_val = (read_data & (~bit_mask)) + (bit_value << offset);
+       i2c_write(i2c_slave_addr, addr, mod_val);
+     end
+   endtask
+
 
    //
    // Routine to put SDA & SCL idle
