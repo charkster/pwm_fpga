@@ -74,8 +74,8 @@ module tb_i2c_top ();
    pwm_top u_pwm_top
      ( .clk,                      // input  
        .button_0   ( reset     ), // input  
-       .scl	       ( scl       ), // input  
-       .sda	       ( sda       ), // inout
+       .scl	   ( scl       ), // input  
+       .sda	   ( sda       ), // inout
        .pwm_out    (           )  // output
        );
 
