@@ -67,7 +67,7 @@ module tb_i2c_top ();
       u_mstr_i2c.i2c_read_word (SLAVE_ID,ADDR_PERIOD, i2c_read_word); // this has the value of 200
       u_mstr_i2c.i2c_bf_write  (SLAVE_ID,ADDR_PWM_1_CTRL, 1'b0, OFFSET_ENABLE, WIDTH_ENABLE); // enable-off, shadow
       u_mstr_i2c.i2c_read      (SLAVE_ID,ADDR_TRIGGER,    i2c_read_data);
-	  repeat(100) #EXT_CLK_PERIOD_NS;
+      repeat(100) #EXT_CLK_PERIOD_NS;
       $finish;
    end
 
