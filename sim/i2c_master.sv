@@ -45,8 +45,7 @@ module i2c_master
    // Set I2C Mode
    // STANDARD
    // FAST
-   // FAST_PLUS 
-   // HIGH_SPEED
+   // FAST_PLUS
    task set_i2c_mode;
      input [10*8-1:0] mode;
      begin
@@ -93,11 +92,6 @@ module i2c_master
            scl_period        = 1000;
            scl_min_time_high = 260;
            scl_min_time_low  = 500;
-         end
-         "HIGH_SPEED" : begin
-           scl_period        =  588;
-           scl_min_time_high =  120;
-           scl_min_time_low  =  320;
          end
          default : begin
            $sformat(mstr,"I2C not set to accepted code ; %s", i2c_mode_i);
