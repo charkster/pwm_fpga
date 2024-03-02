@@ -53,20 +53,20 @@ module tb_i2c_top ();
       #EXT_CLK_PERIOD_NS;
       reset = 1'b0;
       repeat(100) #EXT_CLK_PERIOD_NS;
-      u_mstr_i2c.i2c_write_word(SLAVE_ID,ADDR_PERIOD,      16'd240);
-      u_mstr_i2c.i2c_write_word(SLAVE_ID,ADDR_PWM_1_PHASE, 16'd10);
-      u_mstr_i2c.i2c_write_word(SLAVE_ID,ADDR_PWM_1_DUTY,  16'd20);
-      u_mstr_i2c.i2c_read_word (SLAVE_ID,ADDR_PERIOD, i2c_read_word); // this has the value of 240
-      u_mstr_i2c.i2c_write     (SLAVE_ID,ADDR_TRIGGER,      8'h01);
-      u_mstr_i2c.i2c_write_word(SLAVE_ID,ADDR_PERIOD,      16'd200);
-      u_mstr_i2c.i2c_write_word(SLAVE_ID,ADDR_PWM_1_PHASE, 16'd8);
-      u_mstr_i2c.i2c_write_word(SLAVE_ID,ADDR_PWM_1_DUTY,  16'd10);
-      u_mstr_i2c.i2c_bf_write  (SLAVE_ID,ADDR_PWM_1_CTRL, 3'd4, OFFSET_TRIG_CNT, WIDTH_TRIG_CNT); // trig_count, shadow
-      u_mstr_i2c.i2c_bf_write  (SLAVE_ID,ADDR_PWM_1_CTRL, 1'b1, OFFSET_ENABLE,   WIDTH_ENABLE);   // enable bit, shadow
-      u_mstr_i2c.i2c_write     (SLAVE_ID,ADDR_TRIGGER,      8'h02);   // soft start request
-      u_mstr_i2c.i2c_read_word (SLAVE_ID,ADDR_PERIOD, i2c_read_word); // this has the value of 200
-      u_mstr_i2c.i2c_bf_write  (SLAVE_ID,ADDR_PWM_1_CTRL, 1'b0, OFFSET_ENABLE, WIDTH_ENABLE); // enable-off, shadow
-      u_mstr_i2c.i2c_read      (SLAVE_ID,ADDR_TRIGGER,    i2c_read_data);
+      u_mstr_i2c.i2c_write_word (SLAVE_ID,ADDR_PERIOD,      16'd240);
+      u_mstr_i2c.i2c_write_word (SLAVE_ID,ADDR_PWM_1_PHASE, 16'd10);
+      u_mstr_i2c.i2c_write_word (SLAVE_ID,ADDR_PWM_1_DUTY,  16'd20);
+      u_mstr_i2c.i2c_read_word  (SLAVE_ID,ADDR_PERIOD, i2c_read_word); // this has the value of 240
+      u_mstr_i2c.i2c_write      (SLAVE_ID,ADDR_TRIGGER,      8'h01);
+      u_mstr_i2c.i2c_write_word (SLAVE_ID,ADDR_PERIOD,      16'd200);
+      u_mstr_i2c.i2c_write_word (SLAVE_ID,ADDR_PWM_1_PHASE, 16'd8);
+      u_mstr_i2c.i2c_write_word (SLAVE_ID,ADDR_PWM_1_DUTY,  16'd10);
+      u_mstr_i2c.i2c_bf_write   (SLAVE_ID,ADDR_PWM_1_CTRL, 3'd4, OFFSET_TRIG_CNT, WIDTH_TRIG_CNT); // trig_count, shadow
+      u_mstr_i2c.i2c_bf_write   (SLAVE_ID,ADDR_PWM_1_CTRL, 1'b1, OFFSET_ENABLE,   WIDTH_ENABLE);   // enable bit, shadow
+      u_mstr_i2c.i2c_write      (SLAVE_ID,ADDR_TRIGGER,      8'h02);   // soft start request
+      u_mstr_i2c.i2c_read_word  (SLAVE_ID,ADDR_PERIOD, i2c_read_word); // this has the value of 200
+      u_mstr_i2c.i2c_bf_write   (SLAVE_ID,ADDR_PWM_1_CTRL, 1'b0, OFFSET_ENABLE, WIDTH_ENABLE); // enable-off, shadow
+      u_mstr_i2c.i2c_read       (SLAVE_ID,ADDR_TRIGGER,    i2c_read_data);
       repeat(100) #EXT_CLK_PERIOD_NS;
       $finish;
    end
