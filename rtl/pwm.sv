@@ -19,7 +19,10 @@ module pwm (
   logic [15:0] new_period_count;
   logic [16:0] phase_plus_duty_cycle;
   
-  // 2'd0 is no change, 2'd1 is div_by_2, 2'd2 is div_by_4 and 2'd3 is div_by_8
+  // trig_count of 3'd0 is normal (divide by 1), values 1 to 7 allow for divide by 2 to 8.
+  // trig_count only makes sense when there are multiple pwm channels and another channel needs a large period_count
+  // trig_count can be used to easily divide the period into 2 thru 8 smaller periods
+  // the duty and phase are not divided and need to be adjusted for the smaller period 
   assign new_period       = period / (trig_count + 1);
   assign new_period_count = period_count % new_period;
   
